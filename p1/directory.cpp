@@ -4,15 +4,16 @@
 #include "directory.h"
 
 void createDirectory(Directory *newDirectory, Directory *parentDir, 
-  char *DirectoryName, int time, int umask)
+  const char *DirectoryName, int time, int umask)
 {
-  DirectoryName = (char *) malloc(strlen(DirectoryName) + 1);
+  newDirectory->DirectoryName = (char *) malloc(strlen(DirectoryName) + 1);
   strcpy(newDirectory->DirectoryName, DirectoryName);
   newDirectory->time = time;
   newDirectory->perm = (Permissions *) malloc(sizeof(Permissions));
   createPermissions(newDirectory->perm, umask);
   newDirectory->parent = parentDir;
   newDirectory->numChildren = 0; 
+  
 } // creates a directory, used in init() function in funix.cpp
 
 void showPath(Directory *currentDirectory)
@@ -43,9 +44,17 @@ void DIRmkdir(Directory *newDirectory, Directory *parent, int numChildren,
    
 } // creates new directory
 
-void DIRls(Directory *currentDirectory, char *option)
+void DIRls(Directory *children, char *option, int numChildren)
 {
-  
+  int i;
+  if(numChildren == 0) // if no children directories
+    printf("\n");
+
+  if(numChildren > 0)
+  {
+    for(i = 0; i <= numChildren; i++)
+      printf("%s\n", children[i].DirectoryName);
+  } // if there are subdirs
 } // processes the ls command and displays the directories
 
 void DIRcd(Directory *currentDirectory, char *target)

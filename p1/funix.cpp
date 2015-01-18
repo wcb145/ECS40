@@ -41,19 +41,21 @@ void getCommand(Funix *funix, char *command)
 
 void init(Funix *funix)
 {
- 
   funix->time = 0;
   funix->umask = 0;
 
   Directory *rootDir = (Directory *) malloc(sizeof(Directory));
   funix->currentDirectory = rootDir;
   createDirectory(funix->currentDirectory, NULL, 
-    (char *) "/", funix->time, funix->umask); // creates root directory  
+    "/", funix->time, funix->umask); // creates root directory  
+  printf("Current Directory name: %s", 
+    funix->currentDirectory->DirectoryName);
 } // creates currentDirectory, and sets umask and time
 
 void ls(Funix *funix, int argCount, const char *arguments[])
 {
-  DIRls(funix->currentDirectory, (char *) arguments[1]);
+  DIRls(funix->currentDirectory, (char *) arguments[1], 
+    funix->currentDirectory->numChildren);
 } // calls ls() with currentDirectory as one of its parameters
 
 void mkdir(Funix *funix, int argCount, const char *arguments[])
