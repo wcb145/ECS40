@@ -47,7 +47,8 @@ void init(Funix *funix)
 
   Directory *rootDir = (Directory *) malloc(sizeof(Directory));
   funix->currentDirectory = rootDir;
-  createDirectory((char *) "/", funix->time, funix->umask, funix->currentDirectory, NULL); // creates root directory  
+  createDirectory(funix->currentDirectory, NULL, 
+    (char *) "/", funix->time, funix->umask); // creates root directory  
 } // creates currentDirectory, and sets umask and time
 
 void ls(Funix *funix, int argCount, const char *arguments[])
@@ -58,8 +59,12 @@ void ls(Funix *funix, int argCount, const char *arguments[])
 void mkdir(Funix *funix, int argCount, const char *arguments[])
 {
 
-  if(argCount == 2)  //if proper use of mkdir function
-    DIRmkdir(funix->currentDirectory->children, (char *) arguments[1]);
+  if(argCount == 2) 
+  {
+    DIRmkdir(funix->currentDirectory->children, funix->currentDirectory,
+      funix->currentDirectory->numChildren, (char *) arguments[1],
+      funix->time, funix->umask);
+  } //if proper use of mkdir function
   else //if incorrect use of mkdir
     printf("usage: mkdir directory_name\n");
 

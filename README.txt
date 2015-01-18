@@ -1,4 +1,4 @@
 ECS 40
-Authors: Will Brink and Jordan Duval
+Authors: William Brink and Jordan Duval
 Instructor: Sean Davis
 Program 1

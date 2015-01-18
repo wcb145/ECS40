@@ -8,19 +8,20 @@ typedef struct Dir
 {
   char *DirectoryName;
   int time; 
-  Dir *children; // subdirectories
-  int numSubDirs;
-  Dir *parent; // parent directory
-  Permissions *perm;
+  struct Dir *children; // subdirectories
+  int numChildren;
+  struct Dir *parent; // parent directory
+  	Permissions *perm;
  
 } Directory;
 
 #include "funix.h"
 
-void createDirectory(char *DirectoryName, int time, int umask,
-  Directory *newDirectory, Directory *parentDir);
+void createDirectory(Directory *newDirectory, Directory *parentDir, 
+  char *DirectoryName, int time, int umask);
 void showPath(Directory *currentDirectory);
-void DIRmkdir(Directory *parentDir, char *DirectoryName);
+void DIRmkdir(Directory *newDirectory, Directory *parent, int numChildren, 
+  char *DirectoryName, int time, int umask);
 void DIRls(Directory *currentDirectory, char *option);
 void DIRcd(Directory *currentDirectory, char *target);
 
